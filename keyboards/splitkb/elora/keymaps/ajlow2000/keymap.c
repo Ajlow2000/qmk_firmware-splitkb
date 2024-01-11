@@ -17,12 +17,12 @@
 #include QMK_KEYBOARD_H
 
 enum layers {
-    QWERTY,
-    SYM,
-    NAV,
-    NUM,
-    GAME_OVERLAY,
-    RECURVA,
+    _QWERTY,
+    _SYM,
+    _NAV,
+    _NUM,
+    _GAME_OVERLAY,
+    _RECURVA,
 };
 
 enum tap_dances {
@@ -42,54 +42,94 @@ tap_dance_action_t tap_dance_actions[] = {
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
 
 /* Layer stuff */
-#define DF_Q DF(QWERTY)
-#define DF_R DF(RECURVA)
-#define L_NAV TT(NAV)
-#define L_SYM TT(SYM)
-#define NUM_SPC LT(NUM, KC_SPC)
-#define GAME TG(GAME_OVERLAY)
+#define DF_Q DF(_QWERTY)
+#define DF_R DF(_RECURVA)
+#define L_SYM TT(_SYM)
+#define L_NAV TT(_NAV)
+#define NUM_SPC LT(_NUM, KC_SPC)
+#define GAME TG(_GAME_OVERLAY)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT_myr(
-      TD_CV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,             XXXXXXX, XXXXXXX,          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    G(KC_L),
-      KC_TAB , KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,             XXXXXXX, XXXXXXX,          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_TAB,
-      CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,             XXXXXXX, XXXXXXX,          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, CTL_ENT,
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______, _______, _______, _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                                 XXXXXXX, KC_LGUI, ALT_ENT, KC_SPC,  L_SYM,   L_NAV,   NUM_SPC, KC_BSPC, KC_DEL,  XXXXXXX,
+        TD_CV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,             XXXXXXX, XXXXXXX,          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    G(KC_L),
+        KC_TAB , KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,             XXXXXXX, XXXXXXX,          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_TAB,
+        CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,             XXXXXXX, XXXXXXX,          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, CTL_ENT,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______, _______, _______, _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+                                   XXXXXXX, KC_LGUI, ALT_ENT, KC_SPC,  L_SYM,   L_NAV,   NUM_SPC, KC_BSPC, KC_DEL,  XXXXXXX,
 
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX
     ),
 
-// /*
-//  * Layer template - LAYOUT_myr
-//  *
-//  * ,-------------------------------------------.      ,------.  ,------.      ,-------------------------------------------.
-//  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
-//  * |--------+------+------+------+------+------|      |------|  |------|      |------+------+------+------+------+--------|
-//  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
-//  * |--------+------+------+------+------+------|      |------|  |------|      |------+------+------+------+------+--------|
-//  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
-//  * |--------+------+------+------+------+------+------+------|  |------|------+------+------+------+------+------+--------|
-//  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
-//  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-//  *                        |      |      |      |      |      |  |      |      |      |      |      |
-//  *                        |      |      |      |      |      |  |      |      |      |      |      |
-//  *                        `----------------------------------'  `----------------------------------'
-//  *
-//  * ,-----------------------------.      ,------.                ,---------------------------.      ,------.
-//  * |        |      |      |      |      |      |                |      |      |      |      |      |      |
-//  * `-----------------------------'      `------'                `---------------------------'      '------'
-//  */
-//     [_LAYERINDEX] = LAYOUT_myr(
-//       _______, _______, _______, _______, _______, _______,          _______, _______,          _______, _______, _______, _______, _______, _______,
-//       _______, _______, _______, _______, _______, _______,          _______, _______,          _______, _______, _______, _______, _______, _______,
-//       _______, _______, _______, _______, _______, _______,          _______, _______,          _______, _______, _______, _______, _______, _______,
-//       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//
-//       _______, _______, _______, _______,          _______,                   _______, _______, _______, _______,          _______
-//     ),
+    [_SYM] = LAYOUT_myr(
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,            XXXXXXX,  XXXXXXX,          KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
+        _______, KC_BSLS, KC_QUOT, KC_DQUO, KC_PERC, KC_QUES,          XXXXXXX,  XXXXXXX,          KC_EXLM, KC_RBRC, KC_LBRC, KC_GRV,  KC_COLN, _______,
+        _______, KC_CIRC, KC_EQL,  KC_UNDS, KC_DLR,  KC_ASTR,          XXXXXXX,  XXXXXXX,          KC_AT,   KC_RPRN, KC_LPRN, KC_TILD, KC_SCLN, _______,
+        _______, KC_LT,   KC_PIPE, KC_MINS, KC_GT,   KC_SLSH, _______, _______,  _______, _______, KC_PLUS, KC_RCBR, KC_LCBR, KC_HASH, KC_DOT,  _______,
+                                   XXXXXXX, _______, _______, _______, TG(_SYM), _______, _______, _______, _______, XXXXXXX,
+
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX
+    ),
+
+    [_SYM] = LAYOUT_myr(
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        QK_BOOT, XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX,           KC_MUTE, KC_VOLD, KC_VOLU, XXXXXXX, XXXXXXX, G(KC_L),
+        _______, DF_Q,    KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,          XXXXXXX, XXXXXXX,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, _______,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, GAME,    _______, _______, _______,  _______, XXXXXXX, KC_BRID, KC_BRIU, XXXXXXX, XXXXXXX, _______,
+                                   XXXXXXX, _______, KC_BTN1, KC_BTN2, _______, TG(_NAV), _______, _______, _______, XXXXXXX,
+
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX
+    ),
+
+    [_NUM] = LAYOUT_myr(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,  XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, KC_F1,   KC_F4,   KC_F7,   KC_F10,  XXXXXXX,          XXXXXXX,  XXXXXXX,           KC_SLSH, KC_7,    KC_8,    KC_9,    XXXXXXX, _______,
+        _______, KC_F2,   KC_F5,   KC_F8,   KC_F11,  XXXXXXX,          XXXXXXX,  XXXXXXX,           KC_COLN, KC_4,    KC_5,    KC_6,    XXXXXXX, _______,
+        _______, KC_F3,   KC_F6,   KC_F9,   KC_F12,  XXXXXXX, _______, _______,  _______,  _______, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,    _______,
+                                   XXXXXXX, _______, _______, _______, TG(_NUM), TG(_NUM), _______, _______, _______, XXXXXXX,
+
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX
+    ),
+
+    [_GAME_OVERLAY] = LAYOUT_myr(
+        KC_ESC,  _______, _______, _______, _______, _______,          XXXXXXX, XXXXXXX,          _______, _______, _______, _______, _______, KC_BSPC,
+        KC_TAB,  _______, _______, _______, _______, _______,          XXXXXXX, XXXXXXX,          _______, _______, _______, _______, _______, KC_ESC,
+        KC_LCTL, _______, _______, _______, _______, _______,          XXXXXXX, XXXXXXX,          _______, _______, _______, _______, _______, KC_ENT,
+        KC_LSFT, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_F4,
+                                   XXXXXXX, KC_LCTL, KC_LALT, KC_SPC,  L_SYM,   L_NAV,   NUM_SPC, KC_BSPC, KC_F1,   XXXXXXX,
+
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX
+    ),
+
+    // /*
+    //  * Layer template - LAYOUT_myr
+    //  *
+    //  * ,-------------------------------------------.      ,------.  ,------.      ,-------------------------------------------.
+    //  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+    //  * |--------+------+------+------+------+------|      |------|  |------|      |------+------+------+------+------+--------|
+    //  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+    //  * |--------+------+------+------+------+------|      |------|  |------|      |------+------+------+------+------+--------|
+    //  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+    //  * |--------+------+------+------+------+------+------+------|  |------|------+------+------+------+------+------+--------|
+    //  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+    //  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+    //  *                        |      |      |      |      |      |  |      |      |      |      |      |
+    //  *                        |      |      |      |      |      |  |      |      |      |      |      |
+    //  *                        `----------------------------------'  `----------------------------------'
+    //  *
+    //  * ,-----------------------------.      ,------.                ,---------------------------.      ,------.
+    //  * |        |      |      |      |      |      |                |      |      |      |      |      |      |
+    //  * `-----------------------------'      `------'                `---------------------------'      '------'
+    //  */
+    //     [_LAYERINDEX] = LAYOUT_myr(
+    //       _______, _______, _______, _______, _______, _______,          _______, _______,          _______, _______, _______, _______, _______, _______,
+    //       _______, _______, _______, _______, _______, _______,          _______, _______,          _______, _______, _______, _______, _______, _______,
+    //       _______, _______, _______, _______, _______, _______,          _______, _______,          _______, _______, _______, _______, _______, _______,
+    //       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    //                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    //
+    //       _______, _______, _______, _______,          _______,                   _______, _______, _______, _______,          _______
+    //     ),
 };
 
 /* The default OLED and rotary encoder code can be found at the bottom of qmk_firmware/keyboards/splitkb/elora/rev1/rev1.c
