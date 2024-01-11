@@ -17,30 +17,46 @@
 #include QMK_KEYBOARD_H
 
 enum layers {
-    _QWERTY = 0,
+    QWERTY,
+    SYM,
+    NAV,
+    NUM,
+    GAME_OVERLAY,
+    RECURVA,
 };
 
-// Aliases for readability
-#define QWERTY   DF(_QWERTY)
+enum tap_dances {
+    COPY_PASTE = 0,
+};
 
-#define CTL_ESC  MT(MOD_LCTL, KC_ESC)
-#define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
-#define CTL_MINS MT(MOD_RCTL, KC_MINUS)
+tap_dance_action_t tap_dance_actions[] = {
+    [COPY_PASTE] = ACTION_TAP_DANCE_DOUBLE(C(KC_V), C(KC_C)),
+};
+
+/* Tap Dance */
+#define TD_CV TD(COPY_PASTE)
+
+/* Mod Taps */
+#define CTL_ESC MT(MOD_LCTL, KC_ESC)
+#define CTL_ENT MT(MOD_RCTL, KC_ENT)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
 
-// Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
-// The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
-// produces the key `tap` when tapped (i.e. pressed and released).
+/* Layer stuff */
+#define DF_Q DF(QWERTY)
+#define DF_R DF(RECURVA)
+#define L_NAV TT(NAV)
+#define L_SYM TT(SYM)
+#define NUM_SPC LT(NUM, KC_SPC)
+#define GAME TG(GAME_OVERLAY)
 
-// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT_myr(
-      KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,             XXXXXXX, XXXXXXX,          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_ESC,
-      KC_TAB , KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,             XXXXXXX, XXXXXXX,          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-      CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,             XXXXXXX, XXXXXXX,          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, CTL_QUOT,
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_LBRC, KC_CAPS, XXXXXXX, KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                                 XXXXXXX, KC_LGUI, ALT_ENT, KC_SPC,  XXXXXXX, XXXXXXX, KC_SPC , KC_RALT, KC_RGUI, KC_APP,
+      TD_CV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,             XXXXXXX, XXXXXXX,          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    G(KC_L),
+      KC_TAB , KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,             XXXXXXX, XXXXXXX,          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_TAB,
+      CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,             XXXXXXX, XXXXXXX,          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, CTL_ENT,
+      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______, _______, _______, _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+                                 XXXXXXX, KC_LGUI, ALT_ENT, KC_SPC,  L_SYM,   L_NAV,   NUM_SPC, KC_BSPC, KC_DEL,  XXXXXXX,
 
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX
     ),
