@@ -23,13 +23,12 @@ enum layers {
     NUM,
     GAME_OVERLAY,
     RECURVA,
-    STURDY,
-    COLEMAK_DH,
 };
 
 enum tap_dances {
     COPY_PASTE = 0,
 };
+
 tap_dance_action_t tap_dance_actions[] = {
     [COPY_PASTE] = ACTION_TAP_DANCE_DOUBLE(C(KC_V), C(KC_C)),
 };
@@ -44,9 +43,10 @@ tap_dance_action_t tap_dance_actions[] = {
 /* Layer stuff */
 #define DF_Q DF(QWERTY)
 #define DF_R DF(RECURVA)
-#define DF_S DF(STURDY)
-#define DF_C DF(COLEMAK_DH)
-#define GAME TO(GAME_OVERLAY)
+#define L_NAV TT(NAV)
+#define L_SYM TT(SYM)
+#define L_NUM LT(NUM, KC_SPC)
+#define GAME TG(GAME_OVERLAY)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_TAB,
         MT_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, MT_ENT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-        XXXXXXX, XXXXXXX, KC_LGUI, KC_LALT, KC_SPC,  TT(SYM), TT(NAV), KC_SPC,  KC_BSPC, KC_DEL,  XXXXXXX, XXXXXXX
+        XXXXXXX, XXXXXXX, KC_LGUI, KC_LALT, KC_SPC,  L_SYM,   L_NAV,   L_NUM,   KC_BSPC, KC_DEL,  XXXXXXX, XXXXXXX
     ),
 
     [SYM] = LAYOUT_preonic_grid(
@@ -67,56 +67,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [NAV] = LAYOUT_preonic_grid(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        QK_BOOT, _______, _______, KC_MS_U, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, G(KC_L),
-        _______, DF_Q,    KC_MS_L, KC_MS_D, KC_MS_R, GAME,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-        _______, DF_R,    DF_S,    DF_C,    _______, _______, _______, KC_BRID, KC_BRIU, _______, _______, _______,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        QK_BOOT, XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, XXXXXXX, XXXXXXX, G(KC_L),
+        _______, DF_Q,    KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, _______,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, GAME,    XXXXXXX, KC_BRID, KC_BRIU, XXXXXXX, XXXXXXX, _______,
         XXXXXXX, _______, _______, _______, KC_BTN1, KC_BTN2, TG(NAV), _______, _______, _______, _______, XXXXXXX
     ),
 
     [NUM] = LAYOUT_preonic_grid(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, KC_F1,   KC_F4,   KC_F7,   KC_F10,  _______, KC_SLSH, KC_7,    KC_8,    KC_9,    _______, _______,
-        _______, KC_F2,   KC_F5,   KC_F8,   KC_F11,  _______, KC_COLN, KC_4,    KC_5,    KC_6,    _______, _______,
-        _______, KC_F3,   KC_F6,   KC_F9,   KC_F12,  _______, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,    _______,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, KC_F1,   KC_F4,   KC_F7,   KC_F10,  XXXXXXX, KC_SLSH, KC_7,    KC_8,    KC_9,    XXXXXXX, _______,
+        _______, KC_F2,   KC_F5,   KC_F8,   KC_F11,  XXXXXXX, KC_COLN, KC_4,    KC_5,    KC_6,    XXXXXXX, _______,
+        _______, KC_F3,   KC_F6,   KC_F9,   KC_F12,  XXXXXXX, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,    _______,
         XXXXXXX, _______, _______, _______, _______, TG(NUM), TG(NUM), _______, _______, _______, _______, XXXXXXX
     ),
 
     [GAME_OVERLAY] = LAYOUT_preonic_grid(
-        KC_ESC,  _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, KC_BSPC,
-        KC_TAB,  _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, KC_ESC,
-        KC_LCTL, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, KC_ENT,
-        KC_LSFT, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, KC_F4,
-        XXXXXXX, KC_LALT, XXXXXXX, KC_LCTL, KC_SPC,  KC_SPC,  TG(GAME_OVERLAY), KC_SPC,  KC_F1,   KC_F2,   KC_F3,   XXXXXXX
+        KC_ESC,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_BSPC,
+        KC_TAB,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_ESC,
+        KC_LCTL, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_ENT,
+        KC_LSFT, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_F4,
+        XXXXXXX, XXXXXXX, KC_LCTL, KC_LALT, KC_SPC,  L_SYM,   L_NAV,   L_NUM,   KC_BSPC, KC_F1,   KC_F2,   XXXXXXX
     ),
 
-    // https://github.com/GalileoBlues/Recurva
-    [RECURVA] = LAYOUT_preonic_grid(
-        TD_CV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    G(KC_L),
-        KC_TAB,  KC_F,    KC_R,    KC_D,    KC_P,    KC_V,    KC_Q,    KC_J,    KC_U,    KC_O,    KC_Y,    KC_TAB,
-        MT_ESC,  KC_S,    KC_N,    KC_T,    KC_C,    KC_B,    KC_DOT,  KC_H,    KC_E,    KC_A,    KC_I,    MT_ENT,
-        KC_LSFT, KC_Z,    KC_X,    KC_K,    KC_G,    KC_W,    KC_M,    KC_L,    KC_SCLN, KC_QUOT, KC_COMM, KC_RSFT,
-        XXXXXXX, XXXXXXX, KC_LGUI, KC_LALT, KC_SPC,  TT(SYM), TT(NAV), KC_SPC,  KC_BSPC, KC_DEL,  XXXXXXX, XXXXXXX
-    ),
-
-    // TODO - implement magic key (placeholder is asterisk)
-    // https://github.com/Ikcelaks/keyboard_layouts/blob/main/magic_sturdy/magic_sturdy.md
-    [STURDY] = LAYOUT_preonic_grid(
-        TD_CV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    G(KC_L),
-        KC_TAB,  KC_V,    KC_M,    KC_L,    KC_C,    KC_P,    KC_B,    KC_ASTR, KC_U,    KC_O,    KC_COMM, KC_TAB,
-        MT_ESC,  KC_S,    KC_T,    KC_R,    KC_D,    KC_Y,    KC_F,    KC_N,    KC_E,    KC_A,    KC_I,    MT_ENT,
-        KC_LSFT, KC_X,    KC_K,    KC_J,    KC_G,    KC_W,    KC_Z,    KC_H,    KC_QUOT, KC_QUES, KC_DOT,  KC_RSFT,
-        XXXXXXX, XXXXXXX, KC_LGUI, KC_LALT, KC_SPC,  TT(SYM), TT(NAV), KC_SPC,  KC_BSPC, KC_DEL,  XXXXXXX, XXXXXXX
-    ),
-
-    //
-    [COLEMAK_DH] = LAYOUT_preonic_grid(
-        TD_CV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    G(KC_L),
-        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_TAB,
-        MT_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    MT_ENT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-        XXXXXXX, XXXXXXX, KC_LGUI, KC_LALT, KC_SPC,  TT(SYM), TT(NAV), KC_SPC,  KC_BSPC, KC_DEL,  XXXXXXX, XXXXXXX
-    ),
+    // // https://github.com/GalileoBlues/Recurva
+    // [RECURVA] = LAYOUT_preonic_grid(
+    //     TD_CV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    G(KC_L),
+    //     KC_TAB,  KC_F,    KC_R,    KC_D,    KC_P,    KC_V,    KC_Q,    KC_J,    KC_U,    KC_O,    KC_Y,    KC_TAB,
+    //     MT_ESC,  KC_S,    KC_N,    KC_T,    KC_C,    KC_B,    KC_DOT,  KC_H,    KC_E,    KC_A,    KC_I,    MT_ENT,
+    //     KC_LSFT, KC_Z,    KC_X,    KC_K,    KC_G,    KC_W,    KC_M,    KC_L,    KC_SCLN, KC_QUOT, KC_COMM, KC_RSFT,
+    //     XXXXXXX, XXXXXXX, KC_LGUI, KC_LALT, KC_SPC,  L_SYM,   L_NAV,   L_NUM,   KC_BSPC, KC_DEL,  XXXXXXX, XXXXXXX
+    // ),
 
     // [PLACEHOLDER] = LAYOUT_preonic_grid(
     //     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
